@@ -46,9 +46,11 @@ img {
 }
 
 body {
-  margin: 0;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 8px;
-  font-family: 'Jura', sans-serif;
+  font-family: 'Quicksand', sans-serif;
+  background-color: rgb(220 240 246);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
