@@ -107,3 +107,11 @@ export const MovieName = styled.p`
   line-height: 24px;
   font-weight: 600;
 `;
+
+export const NoResult = styled.p`
+  padding: 10px 0;
+  font-size: 24px;
+  text-align: center;
+  line-height: 24px;
+  font-weight: 600;
+`;

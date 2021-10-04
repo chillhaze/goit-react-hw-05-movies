@@ -17,6 +17,7 @@ import {
   ListItem,
   MovieImg,
   MovieName,
+  NoResult,
 } from './MoviesPage.styled';
 
 function MoviesPage({ onClick }) {
@@ -89,6 +90,10 @@ function MoviesPage({ onClick }) {
             className="Loader"
           />
         </LoaderWrapper>
+      )}
+
+      {status === 'resolved' && searchResult.length === 0 && (
+        <NoResult>... '{searchValue}' is not found. </NoResult>
       )}
 
       {status === 'resolved' && (
