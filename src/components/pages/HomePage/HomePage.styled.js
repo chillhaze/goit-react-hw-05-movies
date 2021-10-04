@@ -37,6 +37,7 @@ export const List = styled.ul`
 
 export const ListItem = styled.li`
   max-width: 180px;
+  min-width: 160px;
 
   box-shadow: 1px 3px 10px -4px #050505;
 `;

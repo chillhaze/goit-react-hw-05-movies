@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
-import { HomePage } from 'components/pages/HomePage';
-import { MoviesPage } from 'components/pages/MoviesPage';
-import { MovieDetailsPage } from 'components/pages/MovieDetailsPage';
+import React, { useState, lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Header } from 'components/Header';
+import { LoaderElement } from 'components/LoaderElement/LoaderElement';
+
+const HomePage = lazy(() =>
+  import(
+    'components/pages/HomePage/HomePage' /* webpackChunkName: "home-page" */
+  ),
+);
+const MoviesPage = lazy(() =>
+  import(
+    'components/pages/MoviesPage/MoviesPage' /* webpackChunkName: "movies-page" */
+  ),
+);
+const MovieDetailsPage = lazy(() =>
+  import(
+    'components/pages/MovieDetailsPage/MovieDetailsPage' /* webpackChunkName: "movies-details-page" */
+  ),
+);
 
 export const App = () => {
   const [movieId, setMovieId] = useState(null);
@@ -16,19 +30,21 @@ export const App = () => {
     <>
       <Header title={'React Movies App'}></Header>
       <main>
-        <Switch>
-          <Route exact path="/">
-            <HomePage title={'Tranding today'} onClick={handleMovieId} />
-          </Route>
+        <Suspense fallback={<LoaderElement />}>
+          <Switch>
+            <Route exact path="/">
+              <HomePage title={'Tranding today'} onClick={handleMovieId} />
+            </Route>
 
-          <Route exact path="/movies">
-            <MoviesPage onClick={handleMovieId} />
-          </Route>
+            <Route exact path="/movies">
+              <MoviesPage onClick={handleMovieId} />
+            </Route>
 
-          <Route path="/movies/:movieId">
-            {movieId && <MovieDetailsPage />}
-          </Route>
-        </Switch>
+            <Route path="/movies/:movieId">
+              {movieId && <MovieDetailsPage props={movieId} />}
+            </Route>
+          </Switch>
+        </Suspense>
       </main>
     </>
   );

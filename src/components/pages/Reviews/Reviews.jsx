@@ -13,7 +13,7 @@ import {
   LoaderWrapper,
 } from './Reviews.styled';
 
-export const Reviews = () => {
+function Reviews() {
   const params = useParams();
   const [movie, setMovie] = useState({});
   const [movieId, setMovieId] = useState(params.movieId);
@@ -76,4 +76,6 @@ export const Reviews = () => {
       )}
     </ReviewInfo>
   );
-};
+}
+
+export default Reviews;

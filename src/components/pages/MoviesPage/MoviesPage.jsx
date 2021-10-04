@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import * as mooviesAPI from '../../../api-services/fetch-api';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useLocation } from 'react-router-dom';
 import defaultImage from '../../../images/poster-not-available.jpg';
 import Loader from 'react-loader-spinner';
 
@@ -19,10 +19,12 @@ import {
   MovieName,
 } from './MoviesPage.styled';
 
-export const MoviesPage = ({ onClick }) => {
+function MoviesPage({ onClick }) {
   const [searchItem, setSearchItem] = useState('');
   const [searchResult, setSearchResult] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
   const [status, setStatus] = useState('idle');
+  const location = useLocation();
 
   const { url } = useRouteMatch();
 
@@ -36,6 +38,7 @@ export const MoviesPage = ({ onClick }) => {
       .then(data => {
         setSearchResult(data.results);
         setStatus('resolved');
+        setSearchItem('');
       })
       .catch(error => {
         console.log(error);
@@ -46,25 +49,25 @@ export const MoviesPage = ({ onClick }) => {
 
   // Считываю результат поиска
   const handleFormChange = e => {
-    setSearchItem('');
-    setSearchItem(e.currentTarget.value.toLowerCase());
+    setSearchValue(e.currentTarget.value.toLowerCase());
   };
 
   // Передаю результат поиска
   const handleSubmit = e => {
     e.preventDefault();
-    if (searchItem.trim() === '') {
+    if (searchValue.trim() === '') {
       console.log('empty field');
       return;
     }
-    // onSubmit(searchItem);
-    setSearchItem('');
+
+    setSearchItem(searchValue);
   };
+
   return (
     <MoviesPageContainer>
       <SearchForm onSubmit={handleSubmit}>
         <SearchInput
-          value={searchItem}
+          value={searchValue}
           onChange={handleFormChange}
           type="text"
           autoComplete="off"
@@ -98,7 +101,19 @@ export const MoviesPage = ({ onClick }) => {
             }
             return (
               <ListItem key={id}>
-                <Link to={`${url}/${id}`} onClick={() => onClick(id)} name={id}>
+                <Link
+                  to={{
+                    pathname: `${url}/${id}`,
+                    state: {
+                      from: {
+                        location,
+                        label: 'Back to search',
+                      },
+                    },
+                  }}
+                  onClick={() => onClick(id)}
+                  name={id}
+                >
                   <MovieImg
                     // src={poster_path ? imageUrl : defaultImage}
                     src={imageUrl}
@@ -115,8 +130,10 @@ export const MoviesPage = ({ onClick }) => {
       )}
     </MoviesPageContainer>
   );
-};
+}
 
 MoviesPage.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
+
+export default MoviesPage;

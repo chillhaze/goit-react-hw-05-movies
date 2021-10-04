@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { HeaderContainer, Logo, Button, Title } from './Header.styled';
 import { NavLink } from 'react-router-dom';
 import { FaReact } from 'react-icons/fa';
-// import PropTypes from 'prop-types';
 
 export const Header = ({ title }) => {
   return (
@@ -31,7 +30,3 @@ export const Header = ({ title }) => {
 Header.propTypes = {
   title: PropTypes.string,
 };
-
-// Header.propTypes = {
-//   title: PropTypes.any,
-// };

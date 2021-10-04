@@ -25,6 +25,11 @@ export const MovieContainer = styled.div`
   align-items: center;
 `;
 
+export const Button = styled.button`
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
 export const InfoWrapper = styled.div`
   padding: 10px 30px;
 `;

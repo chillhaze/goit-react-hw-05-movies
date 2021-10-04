@@ -1,10 +1,18 @@
-import { useState, useEffect } from 'react';
-import { NavLink, Route, useParams } from 'react-router-dom';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import {
+  NavLink,
+  Route,
+  // useParams,
+  useRouteMatch,
+  useLocation,
+  useHistory,
+  Link,
+} from 'react-router-dom';
 import * as mooviesAPI from '../../../api-services/fetch-api';
-import { Cast } from '../Cast/Cast';
-import { Reviews } from '../Reviews/Reviews';
+
 import defaultImage from '../../../images/poster-not-available.jpg';
 import Loader from 'react-loader-spinner';
+import { LoaderElement } from '../../LoaderElement/LoaderElement';
 
 import {
   LinksWrapper,
@@ -13,18 +21,29 @@ import {
   Title,
   SubTitle,
   MovieContainer,
+  Button,
   InfoWrapper,
   Info,
   Accent,
-  LoaderWrapper,
 } from './MovieDetailsPage.styled';
 
-export const MovieDetailsPage = () => {
-  const params = useParams();
-  // console.log(params);
+const Cast = lazy(() =>
+  import('../Cast/Cast' /* webpackChunkName: "cast-page" */),
+);
+const Reviews = lazy(() =>
+  import('../Reviews/Reviews' /* webpackChunkName: "reviews-page" */),
+);
+
+function MovieDetailsPage({ props }) {
+  // const params = useParams();
+  // const [movieId, setMovieId] = useState(params.movieId);
   const [movie, setMovie] = useState({});
-  const [movieId, setMovieId] = useState(params.movieId);
+  const [movieId, setMovieId] = useState(props);
   const [status, setStatus] = useState('idle');
+  const { url, path } = useRouteMatch();
+
+  const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
     if (movieId === null) {
@@ -44,18 +63,14 @@ export const MovieDetailsPage = () => {
     setStatus('idle');
   }, [movieId]);
 
-  const {
-    poster_path,
-    backdrop_path,
-    original_title,
-    title,
-    vote_average,
-    overview,
-    genres,
-  } = movie;
+  const handleBackButtonClick = () => {
+    history.push(location?.state?.from?.location ?? '/');
+  };
+
+  const { poster_path, original_title, title, vote_average, overview, genres } =
+    movie;
 
   const userScore = `${vote_average * 10}%`;
-  let backdrop = `https://image.tmdb.org/t/p/w500/${backdrop_path}`;
   let imageUrl = `https://image.tmdb.org/t/p/w500/${poster_path}`;
   if (poster_path === null) {
     imageUrl = defaultImage;
@@ -63,20 +78,18 @@ export const MovieDetailsPage = () => {
 
   return (
     <Movie>
-      {status === 'pending' && (
-        <LoaderWrapper>
-          <Loader
-            type="TailSpin"
-            color="#ff8d23"
-            height={60}
-            width={60}
-            className="Loader"
-          />
-        </LoaderWrapper>
-      )}
+      {status === 'pending' && <Loader />}
 
       {status === 'resolved' && (
         <>
+          <Button type="button" onClick={handleBackButtonClick}>
+            {`<< ${location?.state?.from?.label ?? 'Back'}`}
+          </Button>
+          {/* Можно button заменить на Link, тогда не нужен метод handleBackButtonClick */}
+          {/* <Link to={location?.state?.from?.location ?? '/'}>
+            {`<< ${location?.state?.from?.label ?? 'Back'}`}{' '}
+          </Link> */}
+
           <MovieContainer>
             <MovieImg src={imageUrl} alt={title} />
 
@@ -94,19 +107,45 @@ export const MovieDetailsPage = () => {
           </MovieContainer>
 
           <LinksWrapper>
-            <NavLink to={`/movies/${movieId}/cast`}>Cast</NavLink>
-            <NavLink to={`/movies/${movieId}/reviews`}>Reviews</NavLink>
+            <NavLink
+              to={{
+                pathname: `${url}/cast`,
+                state: {
+                  from: location?.state?.from ?? '/',
+                  label: 'Back to search',
+                },
+              }}
+            >
+              Cast
+            </NavLink>
+            <NavLink
+              to={{
+                pathname: `${url}/reviews`,
+                state: {
+                  from: location?.state?.from ?? '/',
+                  label: 'Back to search',
+                },
+              }}
+            >
+              Reviews
+            </NavLink>
           </LinksWrapper>
         </>
       )}
 
-      <Route path={`/movies/:movieId/cast`}>
-        <Cast></Cast>
-      </Route>
+      <Suspense fallback={<LoaderElement />}>
+        <Route path={`${path}/cast`}>
+          <Cast />
+        </Route>
+      </Suspense>
 
-      <Route path={`/movies/:movieId/reviews`}>
-        <Reviews />
-      </Route>
+      <Suspense fallback={<LoaderElement />}>
+        <Route path={`${path}/reviews`}>
+          <Reviews />
+        </Route>
+      </Suspense>
     </Movie>
   );
-};
+}
+
+export default MovieDetailsPage;

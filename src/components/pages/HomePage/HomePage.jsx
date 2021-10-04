@@ -15,8 +15,8 @@ import {
   LoaderWrapper,
 } from './HomePage.styled';
 
-export const HomePage = ({ title, onClick }) => {
-  const [result, setReult] = useState(null);
+function HomePage({ title, onClick }) {
+  const [result, setReult] = useState([]);
   const [status, setStatus] = useState('idle');
 
   useEffect(() => {
@@ -86,9 +86,11 @@ export const HomePage = ({ title, onClick }) => {
       </HomePageContainer>
     </>
   );
-};
+}
 
 HomePage.propTypes = {
   onClick: PropTypes.func,
   title: PropTypes.string,
 };
+
+export default HomePage;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, useHistory } from 'react-router-dom';
 import * as mooviesAPI from '../../../api-services/fetch-api';
 import defaultAvaatarImage from '../../../images/no-avatar.jpg';
 import Loader from 'react-loader-spinner';
@@ -15,17 +15,22 @@ import {
   LoaderWrapper,
 } from './Cast.styled';
 
-export const Cast = () => {
+function Cast() {
   const params = useParams();
   const [movie, setMovie] = useState({});
   const [movieId, setMovieId] = useState(params.movieId);
   const [status, setStatus] = useState('idle');
-  // console.log(params);
+  const location = useLocation();
+  const history = useHistory();
+
+  console.log(location);
+  console.log(history);
 
   useEffect(() => {
     if (movieId === null) {
       return;
     }
+
     setStatus('pending');
     mooviesAPI
       .fetchActors(movieId)
@@ -78,4 +83,6 @@ export const Cast = () => {
       )}
     </CastInfo>
   );
-};
+}
+
+export default Cast;
