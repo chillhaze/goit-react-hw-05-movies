@@ -22,7 +22,10 @@ export const ReviewList = styled.ul``;
 
 export const Review = styled.li`
   margin-bottom: 20px;
-  padding: 10px 0;
+  padding: 10px 30px;
+  @media (max-width: 550px) {
+    padding: 10px 10px;
+  }
   border-bottom: 1px solid #ede9e9;
 `;
 

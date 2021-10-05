@@ -22,7 +22,12 @@ export const Movie = styled.div`
 export const MovieContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: row;
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const Button = styled.button`
@@ -32,13 +37,20 @@ export const Button = styled.button`
 
 export const InfoWrapper = styled.div`
   padding: 10px 30px;
+  @media (max-width: 550px) {
+    padding: 10px 10px;
+  }
 `;
 
 export const Title = styled.h2`
+  text-align: left;
+  @media (max-width: 550px) {
+    text-align: center;
+  }
   margin-bottom: 10px;
   font-size: 34px;
   font-weight: 900;
-  line-height: 38px;
+  line-height: 50px;
   border-bottom: 1px solid #ede9e9;
 `;
 
@@ -59,6 +71,7 @@ export const Accent = styled.span`
 `;
 
 export const MovieImg = styled.img`
+  align-content: flex-start;
   height: 350px;
   box-shadow: 1px 3px 17px -1px #050505;
 `;
