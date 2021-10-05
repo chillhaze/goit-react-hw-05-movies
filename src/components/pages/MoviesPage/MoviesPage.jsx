@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import * as mooviesAPI from '../../../api-services/fetch-api';
-import { Link, useRouteMatch, useLocation } from 'react-router-dom';
+import { Link, useRouteMatch, useLocation, useHistory } from 'react-router-dom';
 import defaultImage from '../../../images/poster-not-available.jpg';
 import Loader from 'react-loader-spinner';
 
@@ -26,10 +26,13 @@ function MoviesPage({ onClick }) {
   const [searchValue, setSearchValue] = useState('');
   const [status, setStatus] = useState('idle');
   const location = useLocation();
+  const history = useHistory();
 
+  const query = new URLSearchParams(location.search).get('query');
   const { url } = useRouteMatch();
 
   useEffect(() => {
+    if (query) setSearchItem(query);
     if (searchItem === '') {
       return;
     }
@@ -39,18 +42,24 @@ function MoviesPage({ onClick }) {
       .then(data => {
         setSearchResult(data.results);
         setStatus('resolved');
-        setSearchItem('');
+        // setSearchItem('');
       })
       .catch(error => {
         console.log(error);
         setStatus('rejected');
       });
     setStatus('idle');
-  }, [searchItem]);
+  }, [query, searchItem]);
 
   // Считываю результат поиска
   const handleFormChange = e => {
-    setSearchValue(e.currentTarget.value.toLowerCase());
+    const value = e.currentTarget.value;
+    setSearchValue(value.toLowerCase());
+
+    history.push({
+      ...location,
+      search: `query=${value}`,
+    });
   };
 
   // Передаю результат поиска
@@ -111,9 +120,14 @@ function MoviesPage({ onClick }) {
                     pathname: `${url}/${id}`,
                     state: {
                       from: {
-                        location,
+                        location: {
+                          ...location,
+                          from: `${url}?query=${query}`,
+                        },
                         label: 'Back to search',
                       },
+                      // from: `${url}?query=${query}`,
+                      // label: 'Back to search',
                     },
                   }}
                   onClick={() => onClick(id)}

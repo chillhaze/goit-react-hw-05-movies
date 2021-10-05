@@ -2,6 +2,7 @@ import React, { useState, lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Header } from 'components/Header';
 import { LoaderElement } from 'components/LoaderElement/LoaderElement';
+import NotFound from 'components/pages/NotFound/NotFound';
 
 const HomePage = lazy(() =>
   import(
@@ -42,6 +43,10 @@ export const App = () => {
 
             <Route path="/movies/:movieId">
               {movieId && <MovieDetailsPage props={movieId} />}
+            </Route>
+
+            <Route>
+              <NotFound />
             </Route>
           </Switch>
         </Suspense>
