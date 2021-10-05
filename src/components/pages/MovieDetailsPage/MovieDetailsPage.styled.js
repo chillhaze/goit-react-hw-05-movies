@@ -14,6 +14,9 @@ export const LoaderWrapper = styled.div`
 
 export const Movie = styled.div`
   padding: 10px;
+  @media (max-width: 550px) {
+    padding: 10px 5px;
+  }
   margin-top: 10px;
   background-color: white;
   box-shadow: 1px 3px 10px -4px #050505;
