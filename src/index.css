@@ -48,7 +48,7 @@ img {
 body {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 8px;
+  padding: 10px;
   font-family: 'Quicksand', sans-serif;
   background-color: rgb(220 240 246);
   -webkit-font-smoothing: antialiased;
