@@ -28,6 +28,7 @@ function Reviews() {
         .then(data => {
           setMovie(data);
           setStatus('resolved');
+          scrollDown();
         })
         .catch(error => {
           console.log(error);
@@ -37,6 +38,13 @@ function Reviews() {
       setStatus('idle');
     }
   }, [movieId]);
+
+  const scrollDown = () => {
+    return window.scrollTo({
+      top: `${window.innerWidth < 550 ? 920 : 460}`,
+      behavior: 'smooth',
+    });
+  };
 
   const reviews = movie.results;
 

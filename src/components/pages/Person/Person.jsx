@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 import * as mooviesAPI from '../../../api-services/fetch-api';
 import defaultAvaatarImage from '../../../images/no-avatar.jpg';
 // для фильмов актера в модалке

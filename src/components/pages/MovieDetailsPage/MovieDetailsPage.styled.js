@@ -23,6 +23,7 @@ export const Movie = styled.div`
 `;
 
 export const MovieContainer = styled.div`
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -34,12 +35,22 @@ export const MovieContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  margin-bottom: 10px;
+  padding: 5px 15px 5px 12px;
+  color: white;
+  background-color: teal;
+  border: none;
+  border-radius: 3px;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: #0b6e6e;
+    color: white;
+  }
 `;
 
 export const InfoWrapper = styled.div`
-  padding: 10px 30px;
+  padding: 5px 30px;
   @media (max-width: 550px) {
     padding: 10px 10px;
   }
@@ -98,10 +109,39 @@ export const LinksWrapper = styled.div`
   padding: 15px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   border-bottom: 1px solid #ede9e9;
 
   font-weight: 600;
   & > a {
     margin-right: 10px;
+  }
+  @media (max-width: 700px) {
+    margin-top: 0px;
+    padding: 5px 20px;
+  }
+`;
+
+export const ButtonInfo = styled.button`
+  width: 155px;
+  padding: 7px 15px;
+  color: white;
+  background-color: teal;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  /* box-shadow: 1px 3px 10px -4px #050505; */
+  &:hover,
+  &:focus {
+    background-color: #0b6e6e;
+    color: white;
+  }
+
+  @media (max-width: 700px) {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+  @media (max-width: 400px) {
+    width: 110px;
   }
 `;

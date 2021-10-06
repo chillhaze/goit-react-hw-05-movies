@@ -73,11 +73,7 @@ function ActorMovies({ title, props, onClick }) {
                   }}
                   name={id}
                 >
-                  <MovieImg
-                    // src={poster_path ? imageUrl : defaultImage}
-                    src={imageUrl}
-                    alt={title}
-                  />
+                  <MovieImg src={imageUrl} alt={title} />
                   <MovieName>
                     {title ? title : original_title || name}
                   </MovieName>

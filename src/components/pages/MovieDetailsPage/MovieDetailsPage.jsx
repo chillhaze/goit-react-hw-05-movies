@@ -26,6 +26,7 @@ import {
   Info,
   InfoItem,
   Accent,
+  ButtonInfo,
 } from './MovieDetailsPage.styled';
 
 const Cast = lazy(() =>
@@ -83,8 +84,6 @@ function MovieDetailsPage({ props, handleActorInfo }) {
   } = movie;
 
   const userScore = `${vote_average * 10}%`;
-  // const date = new Date(release_date);
-  // const releaseDate = date.getFullYear();
 
   let imageUrl = `https://image.tmdb.org/t/p/w500/${poster_path}`;
   if (poster_path === null) {
@@ -137,7 +136,7 @@ function MovieDetailsPage({ props, handleActorInfo }) {
                 },
               }}
             >
-              <Button type="button">Cast</Button>
+              <ButtonInfo type="button">Cast</ButtonInfo>
             </NavLink>
 
             <NavLink
@@ -149,7 +148,7 @@ function MovieDetailsPage({ props, handleActorInfo }) {
                 },
               }}
             >
-              <Button type="button">Reviews</Button>
+              <ButtonInfo type="button">Reviews</ButtonInfo>
             </NavLink>
           </LinksWrapper>
         </>
