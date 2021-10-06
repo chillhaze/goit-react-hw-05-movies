@@ -33,6 +33,9 @@ export const List = styled.ul`
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
+  @media (max-width: 550px) {
+    gap: 10px;
+  }
 `;
 
 export const ListItem = styled.li`
@@ -47,11 +50,18 @@ export const ListItem = styled.li`
     border-radius: 3px;
     transform: scale(1.02);
   }
+  /* @media (max-width: 550px) {
+    max-width: 160px;
+    min-width: 130px;
+  } */
 `;
 
 export const MovieImg = styled.img`
   width: 100%;
   height: 270px;
+  /* @media (max-width: 550px) {
+    height: 220px;
+  } */
 `;
 export const MovieName = styled.p`
   /* margin-top: 10px; */
@@ -60,4 +70,11 @@ export const MovieName = styled.p`
   text-align: center;
   line-height: 24px;
   font-weight: 600;
+  @media (max-width: 550px) {
+    padding: 5px 0;
+    font-size: 12px;
+    text-align: center;
+    line-height: 18px;
+    font-weight: 600;
+  }
 `;
