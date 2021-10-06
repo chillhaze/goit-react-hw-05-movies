@@ -21,6 +21,9 @@ export const MoviesPageContainer = styled.div`
 
 export const SearchForm = styled.form`
   margin: 20px 10px;
+  @media (max-width: 550px) {
+    margin: 10px 0px;
+  }
   display: flex;
   align-items: center;
   width: 100%;

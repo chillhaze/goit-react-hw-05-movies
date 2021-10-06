@@ -24,6 +24,7 @@ import {
   Button,
   InfoWrapper,
   Info,
+  InfoItem,
   Accent,
 } from './MovieDetailsPage.styled';
 
@@ -71,10 +72,20 @@ function MovieDetailsPage({ props }) {
     );
   };
 
-  const { poster_path, original_title, title, vote_average, overview, genres } =
-    movie;
+  const {
+    poster_path,
+    original_title,
+    title,
+    vote_average,
+    release_date,
+    overview,
+    genres,
+  } = movie;
 
   const userScore = `${vote_average * 10}%`;
+  // const date = new Date(release_date);
+  // const releaseDate = date.getFullYear();
+
   let imageUrl = `https://image.tmdb.org/t/p/w500/${poster_path}`;
   if (poster_path === null) {
     imageUrl = defaultImage;
@@ -101,7 +112,13 @@ function MovieDetailsPage({ props }) {
               <Title>{original_title || title}</Title>
 
               <Info>
-                User Score: <Accent>{userScore}</Accent>
+                <InfoItem>
+                  User Score: <Accent>{userScore}</Accent>
+                </InfoItem>
+
+                <InfoItem>
+                  Realese date: <Accent>{release_date}</Accent>
+                </InfoItem>
               </Info>
               <SubTitle>Overview</SubTitle>
               <Info>{overview}</Info>

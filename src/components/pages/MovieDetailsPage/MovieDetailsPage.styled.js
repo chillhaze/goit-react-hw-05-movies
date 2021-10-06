@@ -64,8 +64,23 @@ export const SubTitle = styled.h3`
   line-height: 30px;
 `;
 
-export const Info = styled.p`
+export const Info = styled.div`
   margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+
+  @media (max-width: 700px) {
+    padding-bottom: 10px;
+    flex-direction: column;
+    border-bottom: 1px solid #ede9e9;
+  }
+`;
+
+export const InfoItem = styled.div`
+  /* display: flex;
+  flex-direction: column;
+  margin-top: 15px; */
 `;
 
 export const Accent = styled.span`
