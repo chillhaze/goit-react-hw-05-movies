@@ -19,12 +19,23 @@ const MovieDetailsPage = lazy(() =>
     'components/pages/MovieDetailsPage/MovieDetailsPage' /* webpackChunkName: "movies-details-page" */
   ),
 );
+const ActorMovies = lazy(() =>
+  import(
+    'components/pages/ActorMovies/ActorMovies' /* webpackChunkName: "movies-details-page" */
+  ),
+);
 
 export const App = () => {
   const [movieId, setMovieId] = useState(null);
+  const [actorId, setActorId] = useState(null);
+  const [actorName, setActorName] = useState(null);
 
   const handleMovieId = id => {
     setMovieId(id);
+  };
+  const handleActorInfo = (id, name) => {
+    setActorId(id);
+    setActorName(name);
   };
 
   return (
@@ -42,7 +53,22 @@ export const App = () => {
             </Route>
 
             <Route path="/movies/:movieId">
-              {movieId && <MovieDetailsPage props={movieId} />}
+              {movieId && (
+                <MovieDetailsPage
+                  props={movieId}
+                  handleActorInfo={handleActorInfo}
+                />
+              )}
+            </Route>
+
+            <Route path="/actors/:actorId">
+              {actorId && (
+                <ActorMovies
+                  title={`Movies with ${actorName}`}
+                  props={actorId}
+                  onClick={handleMovieId}
+                />
+              )}
             </Route>
 
             <Route>

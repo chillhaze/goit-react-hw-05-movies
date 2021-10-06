@@ -52,3 +52,15 @@ export const fetchReviews = movieId => {
     `${BASE_URL}/movie/${movieId}/reviews?api_key=${API_KEY}`,
   );
 };
+
+export const fetchActorDetails = actorId => {
+  return fetchWithErrorHandling(
+    `${BASE_URL}/person/${actorId}?api_key=${API_KEY}`,
+  );
+};
+
+export const fetchActorMovies = actorId => {
+  return fetchWithErrorHandling(
+    `${BASE_URL}/person/${actorId}/movie_credits?api_key=${API_KEY}`,
+  );
+};

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import * as mooviesAPI from '../../../api-services/fetch-api';
 import defaultAvaatarImage from '../../../images/no-avatar.jpg';
 import Loader from 'react-loader-spinner';
+import Person from '../Person/Person';
 
 import {
   CastInfo,
@@ -15,11 +16,14 @@ import {
   LoaderWrapper,
 } from './Cast.styled';
 
-function Cast() {
+function Cast({ handleActorInfo }) {
   const params = useParams();
   const [movie, setMovie] = useState({});
   const [movieId, setMovieId] = useState(params.movieId);
   const [status, setStatus] = useState('idle');
+
+  const [showModal, setShowModal] = useState(false);
+  const [actorId, setActorId] = useState(null);
 
   useEffect(() => {
     if (movieId === null) {
@@ -38,6 +42,16 @@ function Cast() {
       });
     setStatus('idle');
   }, [movieId]);
+
+  const handleModalOpen = id => {
+    // для фильмов актера в модалке
+    // setShowModal(true);
+    setActorId(id);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
 
   const actors = movie.cast;
 
@@ -59,23 +73,33 @@ function Cast() {
         <CastList>
           {actors &&
             actors.map((actor, index) => {
-              const { profile_path, character, name } = actor;
+              const { profile_path, character, name, id } = actor;
               const imageUrl = `https://image.tmdb.org/t/p/w500/${profile_path}`;
               return (
-                <Actor key={index}>
-                  <ActorAvatar
-                    src={profile_path ? imageUrl : defaultAvaatarImage}
-                    alt={name}
-                  />
-                  <InfoWrapper>
-                    <ActorName>{name}</ActorName>
-                    <Character>Character: {character}</Character>
-                  </InfoWrapper>
+                <Actor
+                  key={index}
+                  onClick={() => {
+                    handleModalOpen(id);
+                    handleActorInfo(id, name);
+                  }}
+                >
+                  <NavLink to={`/actors/${id}`}>
+                    <ActorAvatar
+                      src={profile_path ? imageUrl : defaultAvaatarImage}
+                      alt={name}
+                    />
+                    <InfoWrapper>
+                      <ActorName>{name}</ActorName>
+                      <Character>Character: {character}</Character>
+                    </InfoWrapper>
+                  </NavLink>
                 </Actor>
               );
             })}
         </CastList>
       )}
+
+      {showModal && <Person id={actorId} onClose={handleModalClose} />}
     </CastInfo>
   );
 }

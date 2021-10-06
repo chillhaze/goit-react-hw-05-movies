@@ -35,7 +35,7 @@ const Reviews = lazy(() =>
   import('../Reviews/Reviews' /* webpackChunkName: "reviews-page" */),
 );
 
-function MovieDetailsPage({ props }) {
+function MovieDetailsPage({ props, handleActorInfo }) {
   // const params = useParams();
   // const [movieId, setMovieId] = useState(params.movieId);
   const [movie, setMovie] = useState({});
@@ -139,6 +139,7 @@ function MovieDetailsPage({ props }) {
             >
               <Button type="button">Cast</Button>
             </NavLink>
+
             <NavLink
               to={{
                 pathname: `${url}/reviews`,
@@ -156,7 +157,7 @@ function MovieDetailsPage({ props }) {
 
       <Suspense fallback={<LoaderElement />}>
         <Route path={`${path}/cast`}>
-          <Cast />
+          <Cast handleActorInfo={handleActorInfo} />
         </Route>
       </Suspense>
 
