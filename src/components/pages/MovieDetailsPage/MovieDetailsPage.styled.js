@@ -97,7 +97,11 @@ export const LinksWrapper = styled.div`
   margin-top: 10px;
   padding: 15px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   border-bottom: 1px solid #ede9e9;
+
   font-weight: 600;
+  & > a {
+    margin-right: 10px;
+  }
 `;

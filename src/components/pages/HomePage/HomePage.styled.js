@@ -32,14 +32,21 @@ export const List = styled.ul`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
 `;
 
 export const ListItem = styled.li`
   max-width: 180px;
   min-width: 160px;
+  transition: transform 300ms linear;
 
   box-shadow: 1px 3px 10px -4px #050505;
+  &:hover,
+  &:focus {
+    box-shadow: 0px 1px 17px 0px #313232;
+    border-radius: 3px;
+    transform: scale(1.02);
+  }
 `;
 
 export const MovieImg = styled.img`

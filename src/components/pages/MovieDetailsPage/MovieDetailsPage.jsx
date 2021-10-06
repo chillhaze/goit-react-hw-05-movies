@@ -137,7 +137,7 @@ function MovieDetailsPage({ props }) {
                 },
               }}
             >
-              Cast
+              <Button type="button">Cast</Button>
             </NavLink>
             <NavLink
               to={{
@@ -148,7 +148,7 @@ function MovieDetailsPage({ props }) {
                 },
               }}
             >
-              Reviews
+              <Button type="button">Reviews</Button>
             </NavLink>
           </LinksWrapper>
         </>
